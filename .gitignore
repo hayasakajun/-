@@ -1,0 +1,11 @@
+.venv/
+.local/
+reports/
+__pycache__/
+*.pyc
+*.dpapi
+*.log
+*-status.json
+task.xml
+_free_rpp_base.py
+_rpp_export.py
