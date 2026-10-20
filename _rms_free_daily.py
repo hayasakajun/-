@@ -247,8 +247,9 @@ def collect(base, folder, target, state, statefile, setup):
                 log('点击匹配日期的下载按钮')
                 try:
                     current['button'].click()
+                    print('下载按钮点击调用已完成', flush=True)
                 except TimeoutException:
-                    pass
+                    print('下载按钮点击等待超时，继续检查下载目录', flush=True)
                 files = wait_downloads(folder, timeout=90)
                 if len(files) != 1:
                     raise ValueError('未收到唯一完整报表，请检查下载情况')
@@ -387,6 +388,9 @@ def main():
         (HOME / '最新状态.html').write_text('<meta charset="utf-8"><h1>日报成功</h1><a href="' + link + '">打开本次日报</a>', encoding='utf-8')
         print('日报成功：', report, flush=True)
     except Exception as error:
+        import traceback
+        traceback.print_exc(file=log)
+        log.flush()
         message = str(error) if isinstance(error, ValueError) else type(error).__name__
         state.update(success=False, error=message)
         save(statefile, state)
